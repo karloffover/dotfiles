@@ -1,0 +1,3 @@
+[filesystem "AdoptOpenJDK|11.0.8|rootfs"]
+	timestampResolution = 10000 nanoseconds
+	minRacyThreshold = 15203 microseconds

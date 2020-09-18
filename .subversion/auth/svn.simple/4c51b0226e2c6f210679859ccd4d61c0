@@ -1,0 +1,17 @@
+K 8
+passtype
+V 6
+simple
+K 8
+password
+V 9
+VFRmzc123
+K 15
+svn:realmstring
+V 51
+<https://cvs.fineco.it:443> Login di accesso Fineco
+K 8
+username
+V 14
+giancarlorosso
+END
