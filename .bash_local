@@ -1,0 +1,9 @@
+# include in .bashrc
+#if [ -f ~/.bash_local ]; then
+#  . ~/.bash_local
+#fi
+
+proxy
+export PATH=$HOME/.local/bin:$PATH
+
+export DISPLAY=localhost:0.0
