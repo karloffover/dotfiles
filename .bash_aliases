@@ -15,11 +15,27 @@ alias dev-log='cd /data/logs/dev/$TODAY'
 alias test-log='cd /data/logs/dev/$TODAY'
 alias mount_u='sudo mount -t drvfs U: /mnt/u/'
 
-function sshc {
-    if [ $# -eq 0 ]; then
+function scp_get {
+    if [ $# -lt 2 ]; then
         echo "No arguments supplied"
     else
-        ssh -l giancarlorosso@root@$1 ckpsmp
+        scp giancarlorosso@root@$1@ckpsmp:$2 .
+    fi
+}
+
+function scp_put {
+    if [ $# -lt 2 ]; then
+        echo "No arguments supplied"
+    else
+        scp $1 giancarlorosso@root@$2@ckpsmp:$3
+    fi
+}
+
+function sshc {
+    if [ $# -eq 0 ]; then
+	echo "No arguments supplied"
+    else
+	ssh -l giancarlorosso@root@$1 ckpsmp
     fi
 }
 
@@ -66,13 +82,13 @@ function start_ssh_agent {
 
 agent_is_running() {
     if [ "$SSH_AUTH_SOCK" ]; then
-        # ssh-add returns:
-        #   0 = agent running, has keys
-        #   1 = agent running, no keys
-        #   2 = agent not running
-        ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
+	# ssh-add returns:
+	#   0 = agent running, has keys
+	#   1 = agent running, no keys
+	#   2 = agent not running
+	ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
     else
-        false
+	false
     fi
 }
 

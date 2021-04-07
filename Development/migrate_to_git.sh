@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #set -x
 
@@ -8,17 +8,18 @@ function pause(){
 
 usage() {
 	cat <<EOF
-Usage:	$0 -p trading -s webapps/pdfe -n pdfe-2.0 
+Usage:	$0 -p trading -s webapps/pdfe -n pdfe-2.0
         Scarica un progetto da SVN e ne copia il contenuto,
         comprensivo di storico, su git.
 
 Options:
         -h Questo help
-        -p repository SVN di partenza (ie. trading, portal)
-        -s percorso interno al repository (ie. webapps/public, 
+        -p repository SVN di partenza (ie. trading, portal) relativo a cvs.fineco.it
+        -s percorso interno al repository (ie. webapps/public,
            apps/fundinfo, libs/fineco-commons
         -n nome di destinazione (ie. pdfe)
         -d parent git di destinazione
+        -k altro repository svn di partenza
 
 Examples
         $0 -p trading -s libs/fineco-trading-mspconnector -n msp-connector
@@ -27,7 +28,7 @@ Examples
 EOF
 }
 
-while getopts "hp:s:n:d:" OPTION
+while getopts "hp:s:n:d:k:" OPTION
 do
     case $OPTION in
         h) usage; exit 1;;
@@ -35,6 +36,7 @@ do
         s) SVN_PRJ=${OPTARG};;
         n) GIT_NAME=${OPTARG};;
         d) GIT_DEST_PARENT=${OPTARG};;
+        k) SVN_FULL_PATH=${OPTARG};;
     esac
 done
 
@@ -61,12 +63,22 @@ echo -e "\tProgetto importato: $SVN_PRJ
 
 pause 'Press [Enter] key to continue...'
 
-svn co https://cvs.fineco.it/svn/$SVN_REPO/$SVN_PRJ
+if [ x${SVN_FULL_PATH} == x ]; then
+    svn co https://cvs.fineco.it/svn/$SVN_REPO/$SVN_PRJ
+else
+    svn co ${SVN_FULL_PATH}
+fi
+
 pushd $folder && svn log --xml --quiet | grep author | sort -u | perl -pe 's/.*>(.*?)<.*/$1 = /'
 #exit 0
 popd
 rm $folder -rf
-git svn clone https://cvs.fineco.it/svn/$SVN_REPO/$SVN_PRJ --authors-file=./users.txt --no-metadata --prefix "" -s $folder
+if [ x${SVN_FULL_PATH} == x ]; then
+    git svn clone https://cvs.fineco.it/svn/$SVN_REPO/$SVN_PRJ --authors-file=./users.txt --no-metadata --prefix "" -s $folder
+else
+    git svn clone ${SVN_FULL_PATH} --authors-file=./users.txt --no-metadata --prefix "" -s $folder
+fi
+
 if [ -d $folder ]; then
     pushd $folder
     for t in $(git for-each-ref --format='%(refname:short)' refs/remotes/tags); do git tag ${t/tags\//} $t && git branch -D -r $t; done
