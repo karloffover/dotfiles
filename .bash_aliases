@@ -3,7 +3,7 @@ TODAY=$(date +%Y%m%d)
 
 alias devel='cd /home/giancarlorosso/Development'
 alias home="cd /mnt/c/Users/giancarlorosso"
-alias svn_propset='svn propset svn:ignore -F /c/users/giancarlorosso/documents/netbeansprojects/svn_ignore.txt -R .'
+alias svn_propset='svn propset svn:ignore -F /c/users/giancarlorosso/Documents/svn_ignore.txt -R .'
 alias display_updates='mvn org.codehaus.mojo:versions-maven-plugin:2.8.1:display-dependency-updates'
 alias display_updates_no_major='mvn -DallowAnyUpdates=false -DallowMajorUpdates=false org.codehaus.mojo:versions-maven-plugin:2.8.1:display-dependency-updates'
 alias oc-prod='oc login https://prod-openshift.fineco.it --username=giancarlorosso'
@@ -14,6 +14,8 @@ alias get-pods='oc get pods'
 alias dev-log='cd /data/logs/dev/$TODAY'
 alias test-log='cd /data/logs/dev/$TODAY'
 alias mount_u='sudo mount -t drvfs U: /mnt/u/'
+alias sshlog='ssh -l giancarlorosso@kdsa-view@netltr ckpsmp'
+alias sizes='du -d1 -k . | sort -n'
 
 function scp_get {
     if [ $# -lt 2 ]; then
@@ -111,4 +113,20 @@ add_all_keys() {
 
 gerrit() {
 	ssh -p 29418 cvs.fineco.it gerrit "$@"
+}
+
+verify-pack() {
+    if [ $# -eq 0 ]; then
+	echo "No arguments supplied"
+    else
+        git verify-pack -v $1 | sort -k 3 -n | tail -10
+    fi
+}
+
+rev-list() {
+    if [ $# -eq 0 ]; then
+        echo "No arguments supplied"
+    else
+        git rev-list --objects --all | grep $1
+    fi
 }
