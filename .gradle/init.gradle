@@ -1,52 +1,74 @@
 /**
- * init.gradle file for development using the Nexus Repository Manager as proxy repository
+ * init.gradle file for development using Nexus as proxy repository
  *
- * @author Manfred Moser <manfred@simpligility.com>
+ * @author Manfred Moser <manfred@simpligility.com
+ * akom added blacklisting feature to leave certain projects alone.
  */
 
-apply plugin:NexusRepositoryPlugin
+apply plugin: NexusRepositoryPlugin
 
 class NexusRepositoryPlugin implements Plugin<Gradle> {
 
-  final static String LOG_PREFIX = "init.gradle/NexusRepositoryPlugin:"
+    final static String LOG_PREFIX = "[init]NexusRepositoryPlugin:"
+    //Do not alter projects that define a maven repository with this URL:
+    final static String BLACKLISTED_REPO_URL_SUBSTRING = 'some.internal.domain'
+    //passing -DNexusRepositoryPluginDisable=true prevents plugin execution
+    final static String DISABLE_PROPERTY = 'NexusRepositoryPluginDisable'
 
-  final Closure NexusConfig = {
-    maven {
-      name = 'standard-nexus'
-      url = 'https://cvs.fineco.it/nexus/repository/public/'
-    }
-    // if required you can add further repositories or groups here
-    // and they will be left intact if the name starts with standard-
-    // although it is better to just add those repositories in Nexus
-    // and expose them via the public group
-  }
-
-  final Closure RepoHandler = {
-    all { ArtifactRepository repo ->
-      if (repo.name.toString().startsWith("standard-") ) {
-         println "$LOG_PREFIX $repo.name at $repo.url activated as repository."
-      } else {
-        if (repo instanceof MavenArtifactRepository) {
-          remove repo
-          println "$LOG_PREFIX $repo.name at $repo.url removed."
-        } else {
-          println "$LOG_PREFIX $repo.name kept (not a Maven repository)."
+    final Closure NexusConfig = {
+        maven {
+            name = 'standard-nexus'
+            url = 'https://cvs.fineco.it/nexus/content/groups/public'
         }
-      }
+        // if required you can add further repositories or groups here and they will
+        // be left intact if the name starts with standard-
+        // although it is better to just add those repositories in Nexus
+        // and expose them via the public group
     }
-  }
 
-
-  void apply(Gradle gradle) {
-    // Override all project specified Maven repos with standard
-    // defined in here
-    gradle.allprojects{ project ->
-      println "$LOG_PREFIX  Reconfiguring repositories."
-      project.repositories RepoHandler
-      project.buildscript.repositories RepoHandler
-
-      project.repositories NexusConfig
-      project.buildscript.repositories NexusConfig
+    final Closure RepoHandler = {
+        all { ArtifactRepository repo ->
+            if (repo.name.toString().startsWith("standard-")) {
+                println "$LOG_PREFIX    $repo.name at $repo.url activated as repository."
+            } else {
+                if (repo instanceof MavenArtifactRepository) {
+                    remove repo
+                    println "$LOG_PREFIX    $repo.name at $repo.url removed."
+                } else if (repo.name.startsWith('__plugin_repository__')) {
+                    //also handle any plugin repo
+                    remove repo
+                    println "$LOG_PREFIX    $repo.name removed."
+                } else {
+                    println "$LOG_PREFIX    $repo.name kept (not a Maven repository: ${repo.class})."
+                }
+            }
+        }
     }
-  }
+
+    void apply(Gradle gradle) {
+        if (System.properties[DISABLE_PROPERTY]) {
+            println "$LOG_PREFIX Disabled by property, not modifying repository information"
+            return
+        }
+
+        // Override all project specified Maven repos with standard defined in here
+        gradle.allprojects { project ->
+
+            //check if they have blacklisted repos
+            if (project.repositories.find { ArtifactRepository repo ->
+                "${repo.url}".indexOf(BLACKLISTED_REPO_URL_SUBSTRING) >= 0
+            }) {
+                println "$LOG_PREFIX ${project}: Not changing repositories, Blacklisted repos detected."
+                return
+            }
+            println "$LOG_PREFIX  ${project}: Reconfiguring repositories and buildscript repositories."
+            project.repositories RepoHandler
+            project.buildscript.repositories RepoHandler
+
+            // The minecraftforge repo has problems being proxied so we need to leave it in place directly.
+            project.repositories NexusConfig
+            project.buildscript.repositories NexusConfig
+        }
+    }
+
 }
