@@ -115,7 +115,7 @@ gerrit() {
 	ssh -p 29418 cvs.fineco.it gerrit "$@"
 }
 
-verify-pack() {
+git-verify-pack() {
     if [ $# -eq 0 ]; then
 	echo "No arguments supplied"
     else
@@ -123,7 +123,7 @@ verify-pack() {
     fi
 }
 
-rev-list() {
+git-rev-list() {
     if [ $# -eq 0 ]; then
         echo "No arguments supplied"
     else
