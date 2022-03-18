@@ -6,4 +6,5 @@
 proxy
 export PATH=$HOME/.local/bin:$PATH
 
+export XMLLINT_INDENT="	"
 export DISPLAY=localhost:0.0

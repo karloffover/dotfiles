@@ -156,7 +156,7 @@ set multibuffer
 # set smooth
 
 ## Enable soft line wrapping (AKA full-line display).
-# set softwrap
+set softwrap
 
 ## Use this spelling checker instead of the internal one.  This option
 ## does not properly have a default value.
@@ -246,6 +246,9 @@ set multibuffer
 ## them easier to remember and faster to type using nano's -Y option.
 ##
 ## To include all existing syntax definitions, you can do:
+syntax "default"
+color ,green "[[:space:]]+$"
+
 include "/usr/share/nano/*.nanorc"
 
 

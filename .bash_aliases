@@ -33,7 +33,7 @@ function scp_put {
     fi
 }
 
-function sshc {
+function ca {
     if [ $# -eq 0 ]; then
 	echo "No arguments supplied"
     else
