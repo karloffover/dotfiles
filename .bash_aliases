@@ -16,6 +16,19 @@ alias test-log='cd /data/logs/dev/$TODAY'
 alias mount_u='sudo mount -t drvfs U: /mnt/u/'
 alias sshlog='ssh -l giancarlorosso@kdsa-view@netltr ckpsmp'
 alias sizes='du -d1 -k . | sort -n'
+alias ddeploy='cd ~/Development/deploy'
+alias ddocker='cd ~/Development/deploy/docker'
+alias dconfigs='cd ~/Development/deploy/configs'
+alias dansible='cd ~/Development/deploy/ansible'
+
+function git_clone {
+    # git_clone deploy/ansible/pianificazioneservice pianificazioneservice
+    if [ $# -lt 2 ]; then
+        echo "No arguments supplied"
+    else
+        git clone "ssh://giancarlorosso@cvs.fineco.it:29418/$1" $2 && scp -p -P 29418 giancarlorosso@cvs.fineco.it:hooks/commit-msg "$2/.git/hooks/"
+    fi
+}
 
 function scp_get {
     if [ $# -lt 2 ]; then
@@ -39,6 +52,13 @@ function ca {
     else
 	ssh -l giancarlorosso@root@$1 ckpsmp
     fi
+}
+
+function proxysrv {
+    echo 'Proxysrv Standard'
+    export http_proxy=http://proxysrv.fineco.it:3128
+    export https_proxy=$http_proxy
+    export no_proxy=".fineco.it,.finecobank.com"
 }
 
 function proxy {

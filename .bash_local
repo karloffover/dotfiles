@@ -1,10 +1,5 @@
-# include in .bashrc
-#if [ -f ~/.bash_local ]; then
-#  . ~/.bash_local
-#fi
-
-proxy
-export PATH=$HOME/.local/bin:$PATH
+proxysrv
+export PATH=$HOME/.local/bin:$PATH:~/Applications/apache-maven-3.8.4/bin
 
 export XMLLINT_INDENT="	"
 export DISPLAY=localhost:0.0
