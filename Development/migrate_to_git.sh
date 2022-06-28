@@ -1,42 +1,42 @@
-#!/bin/sh
+#!/bin/bash
 
 #set -x
 
 function pause(){
-   read -p "$*"
+    read -p "$*"
 }
 
 usage() {
-	cat <<EOF
+    cat <<EOF
 Usage:	$0 -p trading -s webapps/pdfe -n pdfe-2.0
-        Scarica un progetto da SVN e ne copia il contenuto,
-        comprensivo di storico, su git.
+	Scarica un progetto da SVN e ne copia il contenuto,
+	comprensivo di storico, su git.
 
 Options:
-        -h Questo help
-        -p repository SVN di partenza (ie. trading, portal) relativo a cvs.fineco.it
-        -s percorso interno al repository (ie. webapps/public,
-           apps/fundinfo, libs/fineco-commons
-        -n nome di destinazione (ie. pdfe)
-        -d parent git di destinazione
-        -k altro repository svn di partenza
+	-h Questo help
+	-p repository SVN di partenza (ie. trading, portal) relativo a cvs.fineco.it
+	-s percorso interno al repository (ie. webapps/public,
+	   apps/fundinfo, libs/fineco-commons
+	-n nome di destinazione (ie. pdfe)
+	-d parent git di destinazione
+	-k altro repository svn di partenza
 
 Examples
-        $0 -p trading -s libs/fineco-trading-mspconnector -n msp-connector
-           crea un progetto in git al percorso trading/msp-connector
-           recuperando i sorgenti da SVN.
+	$0 -p trading -s libs/fineco-trading-mspconnector -n msp-connector
+	   crea un progetto in git al percorso trading/msp-connector
+	   recuperando i sorgenti da SVN.
 EOF
 }
 
 while getopts "hp:s:n:d:k:" OPTION
 do
     case $OPTION in
-        h) usage; exit 1;;
-        p) SVN_REPO=${OPTARG};;
-        s) SVN_PRJ=${OPTARG};;
-        n) GIT_NAME=${OPTARG};;
-        d) GIT_DEST_PARENT=${OPTARG};;
-        k) SVN_FULL_PATH=${OPTARG};;
+	h) usage; exit 1;;
+	p) SVN_REPO=${OPTARG};;
+	s) SVN_PRJ=${OPTARG};;
+	n) GIT_NAME=${OPTARG};;
+	d) GIT_DEST_PARENT=${OPTARG};;
+	k) SVN_FULL_PATH=${OPTARG};;
     esac
 done
 
@@ -51,6 +51,9 @@ if [ $# -lt 6 ]; then
 fi
 
 folder=$(echo $SVN_PRJ | cut -d'/' -f2)
+if [ x$folder == x ]; then
+    folder=$(echo ${SVN_FULL_PATH} | awk 'BEGIN {FS="/"} {print $NF}')
+fi
 
 if [ x${GIT_DEST_PARENT} != x ]; then
     GIT_PARENT=${GIT_DEST_PARENT}
