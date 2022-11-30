@@ -1,5 +1,5 @@
 proxysrv
 export PATH=$HOME/.local/bin:$PATH:~/Applications/apache-maven-3.8.6/bin
 
-export XMLLINT_INDENT="	"
+export XMLLINT_INDENT=" "
 export DISPLAY=localhost:0.0

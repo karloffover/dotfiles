@@ -24,25 +24,25 @@ alias dansible='cd ~/Development/deploy/ansible'
 function git_clone {
     # git_clone deploy/ansible/pianificazioneservice pianificazioneservice
     if [ $# -lt 2 ]; then
-        echo "No arguments supplied"
+	echo "No arguments supplied"
     else
-        git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/$1" $2 && scp -p -P 29418 giancarlorosso@cvs.fineco.it:hooks/commit-msg "$2/.git/hooks/"
+	git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/$1" $2 && scp -p -P 29418 giancarlorosso@cvs.fineco.it:hooks/commit-msg "$2/.git/hooks/"
     fi
 }
 
 function scp_get {
     if [ $# -lt 2 ]; then
-        echo "No arguments supplied"
+	echo "No arguments supplied"
     else
-        scp giancarlorosso@root@$1@ckpsmp:$2 .
+	scp giancarlorosso@root@$1@ckpsmp:$2 .
     fi
 }
 
 function scp_put {
     if [ $# -lt 2 ]; then
-        echo "No arguments supplied"
+	echo "No arguments supplied"
     else
-        scp $1 giancarlorosso@root@$2@ckpsmp:$3
+	scp $1 giancarlorosso@root@$2@ckpsmp:$3
     fi
 }
 
@@ -139,15 +139,15 @@ git-verify-pack() {
     if [ $# -eq 0 ]; then
 	echo "No arguments supplied"
     else
-        git verify-pack -v $1 | sort -k 3 -n | tail -10
+	git verify-pack -v $1 | sort -k 3 -n | tail -10
     fi
 }
 
 git-rev-list() {
     if [ $# -eq 0 ]; then
-        echo "No arguments supplied"
+	echo "No arguments supplied"
     else
-        git rev-list --objects --all | grep $1
+	git rev-list --objects --all | grep $1
     fi
 }
 
