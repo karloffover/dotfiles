@@ -1,7 +1,8 @@
 # This is Git's per-user configuration file.
 [user]
-name = Giancarlo Rosso
-email = g.rosso@fineco.it
+        name = Giancarlo Rosso
+        email = g.rosso@fineco.it
+        username = giancarlorosso
 [alias]
 	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
 	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
@@ -25,7 +26,7 @@ email = g.rosso@fineco.it
 # code review
 	review = "push origin HEAD:refs/for/master"
 [credential]
-	helper = store
+	helper = store --file ~/.git-credentials
 [core]
 	fscache = true
 	autocrlf = true
@@ -36,3 +37,6 @@ email = g.rosso@fineco.it
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[pull]
+	ff = only
+	rebase = false

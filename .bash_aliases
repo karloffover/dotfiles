@@ -26,7 +26,7 @@ function git_clone {
     if [ $# -lt 2 ]; then
         echo "No arguments supplied"
     else
-        git clone "ssh://giancarlorosso@cvs.fineco.it:29418/$1" $2 && scp -p -P 29418 giancarlorosso@cvs.fineco.it:hooks/commit-msg "$2/.git/hooks/"
+        git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/$1" $2 && scp -p -P 29418 giancarlorosso@cvs.fineco.it:hooks/commit-msg "$2/.git/hooks/"
     fi
 }
 
@@ -149,4 +149,8 @@ git-rev-list() {
     else
         git rev-list --objects --all | grep $1
     fi
+}
+
+function ls-projects {
+	ssh -p 29418 cvs.fineco.it gerrit ls-projects -m $1
 }
