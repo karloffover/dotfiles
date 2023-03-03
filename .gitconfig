@@ -25,6 +25,8 @@
 	fix = "!f() { git cap \"fix: $@\"; }; f"
 # code review
 	review = "push origin HEAD:refs/for/master"
+# switch
+        sw = switch
 [credential]
 	helper = store --file ~/.git-credentials
 [core]

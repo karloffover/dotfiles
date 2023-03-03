@@ -1,5 +1,8 @@
 proxysrv
 export PATH=$HOME/.local/bin:$PATH:~/Applications/apache-maven-3.8.6/bin
-
 export XMLLINT_INDENT=" "
-export DISPLAY=localhost:0.0
+export DISPLAY=localhost:-1.0
+
+if [[ "$TERM" == "dumb" ]]; then
+    PS1='$ '
+fi

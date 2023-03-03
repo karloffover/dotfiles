@@ -17,7 +17,7 @@ alias mount_u='sudo mount -t drvfs U: /mnt/u/'
 alias sshlog='ssh -l giancarlorosso@kdsa-view@netltr ckpsmp'
 alias sizes='du -d1 -k . | sort -n'
 alias ddeploy='cd ~/Development/deploy'
-alias ddocker='cd ~/Development/deploy/docker'
+alias ddocker='cd ~/Development/architetture/docker'
 alias dconfigs='cd ~/Development/deploy/configs'
 alias dansible='cd ~/Development/deploy/ansible'
 
