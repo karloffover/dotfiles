@@ -168,17 +168,17 @@ function set-jdk() {
 }
 
 function oc-logs() {
-        if [ $# -eq 1 ]; then
-                echo "No arguments supplied"
-        else
-                oc logs --tail 10 -f $1
-        fi
+	if [ $# -eq 1 ]; then
+		echo "No arguments supplied"
+	else
+		oc logs --tail 10 -f $1
+	fi
 }
 
 function kube-logs() {
-        if [ $# -eq 1 ]; then
-                echo "No arguments supplied"
-        else
-                kubectl logs --tail 10 -f $1
-        fi
+	if [ $# -eq 1 ]; then
+		echo "No arguments supplied"
+	else
+		kubectl logs --tail 10 -f $1
+	fi
 }
