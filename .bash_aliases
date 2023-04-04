@@ -25,7 +25,7 @@ alias kdevext='kubectl login -u giancarlorosso -s devkubeext'
 alias kgetpods='kubectl get pods --namespace=fineco-dev'
 alias krsh='exec --stdin --tty -n fineco-dev  vp-wrapper-api-dev-db6bcbf7d-5t5gl -- bash'
 
-function git_clone {
+function git_clone() {
     # git_clone deploy/ansible/pianificazioneservice pianificazioneservice
     if [ $# -lt 2 ]; then
 	echo "No arguments supplied"
@@ -136,7 +136,7 @@ add_all_keys() {
 }
 
 gerrit() {
-	ssh -p 29418 cvs.fineco.it gerrit "$@"
+    ssh -p 29418 cvs.fineco.it gerrit "$@"
 }
 
 git-verify-pack() {
@@ -156,29 +156,29 @@ git-rev-list() {
 }
 
 function ls-projects {
-	ssh -p 29418 cvs.fineco.it gerrit ls-projects -m $1
+    ssh -p 29418 cvs.fineco.it gerrit ls-projects -m $1
 }
 
 function set-jdk() {
-	if [ $# -eq 0 ]; then
-		echo "No arguments supplied"
-	else
-		echo "$1"
-	fi
+    if [ $# -eq 0 ]; then
+	echo "No arguments supplied"
+    else
+	echo "$1"
+    fi
 }
 
 function oc-logs() {
-	if [ $# -eq 1 ]; then
-		echo "No arguments supplied"
-	else
-		oc logs --tail 10 -f $1
-	fi
+    if [ $# -eq 1 ]; then
+	echo "No arguments supplied"
+    else
+	oc logs --tail 10 -f $1
+    fi
 }
 
 function kube-logs() {
-	if [ $# -eq 1 ]; then
-		echo "No arguments supplied"
-	else
-		kubectl logs --tail 10 -f $1
-	fi
+    if [ $# -eq 1 ]; then
+	echo "No arguments supplied"
+    else
+	kubectl logs --tail 10 -f $1
+    fi
 }
