@@ -8,9 +8,9 @@ alias display_updates='mvn org.codehaus.mojo:versions-maven-plugin:2.8.1:display
 alias display_updates_no_major='mvn -DallowAnyUpdates=false -DallowMajorUpdates=false org.codehaus.mojo:versions-maven-plugin:2.8.1:display-dependency-updates'
 alias oc-prod='oc login https://prod-openshift.fineco.it --username=giancarlorosso'
 alias oc-dev='oc login https://dev-openshift.fineco.it --username=giancarlorosso'
-alias fineco-dev='oc project fineco-dev'
-alias fineco-test='oc project fineco-test'
-alias get-pods='oc get pods'
+alias oc-fineco-dev='oc project fineco-dev'
+alias oc-fineco-test='oc project fineco-test'
+alias oc-get-pods='oc get pods'
 alias dev-log='cd /data/logs/dev/$TODAY'
 alias test-log='cd /data/logs/dev/$TODAY'
 alias mount_u='sudo mount -t drvfs U: /mnt/u/'
@@ -20,6 +20,10 @@ alias ddeploy='cd ~/Development/deploy'
 alias ddocker='cd ~/Development/architetture/docker'
 alias dconfigs='cd ~/Development/deploy/configs'
 alias dansible='cd ~/Development/deploy/ansible'
+alias kdevint='kubectl login -u giancarlorosso -s devkubeint'
+alias kdevext='kubectl login -u giancarlorosso -s devkubeext'
+alias kgetpods='kubectl get pods --namespace=fineco-dev'
+alias krsh='exec --stdin --tty -n fineco-dev  vp-wrapper-api-dev-db6bcbf7d-5t5gl -- bash'
 
 function git_clone {
     # git_clone deploy/ansible/pianificazioneservice pianificazioneservice
@@ -153,4 +157,12 @@ git-rev-list() {
 
 function ls-projects {
 	ssh -p 29418 cvs.fineco.it gerrit ls-projects -m $1
+}
+
+function set-jdk() {
+	if [ $# -eq 0 ]; then
+		echo "No arguments supplied"
+	else
+		echo "$1"
+	fi
 }
