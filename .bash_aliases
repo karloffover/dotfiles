@@ -20,10 +20,17 @@ alias ddeploy='cd ~/Development/deploy'
 alias ddocker='cd ~/Development/architetture/docker'
 alias dconfigs='cd ~/Development/deploy/configs'
 alias dansible='cd ~/Development/deploy/ansible'
-alias kdevint='kubectl login -u giancarlorosso -s devkubeint'
-alias kdevext='kubectl login -u giancarlorosso -s devkubeext'
+alias kdevint='kubectl login -u giancarlorosso -s devkubeint && kubectl config set-context --current --namespace=fineco-dev'
+alias kdevext='kubectl login -u giancarlorosso -s devkubeext && kubectl config set-context --current --namespace=fineco-dev'
 alias kgetpods='kubectl get pods --namespace=fineco-dev'
-alias krsh='exec --stdin --tty -n fineco-dev  vp-wrapper-api-dev-db6bcbf7d-5t5gl -- bash'
+
+function kubelogs() {
+    kubectl logs --tail 10 -f $1
+}
+
+function kubersh() {
+    kubectl exec --stdin --tty -n fineco-dev $1 -- bash
+}
 
 function git_clone() {
     # git_clone deploy/ansible/pianificazioneservice pianificazioneservice
