@@ -31,7 +31,7 @@
 	helper = store --file ~/.git-credentials
 [core]
 	fscache = true
-	autocrlf = true
+	autocrlf = false
 [http]
 	sslVerify = false
 [filter "lfs"]
@@ -42,3 +42,8 @@
 [pull]
 	ff = only
 	rebase = false
+[init]
+	defaultBranch = master
+[lfs]
+	locksverify = false
+	url = https://cvs.fineco.it/nexus/repository/git-lfs/info/lfs

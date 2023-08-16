@@ -21,8 +21,14 @@ alias ddocker='cd ~/Development/architetture/docker'
 alias dconfigs='cd ~/Development/deploy/configs'
 alias dansible='cd ~/Development/deploy/ansible'
 alias kdevint='kubectl login -u giancarlorosso -s devkubeint && kubectl config set-context --current --namespace=fineco-dev'
+alias ktestint='kubectl login -u giancarlorosso -s devkubeint && kubectl config set-context --current --namespace=fineco-test'
 alias kdevext='kubectl login -u giancarlorosso -s devkubeext && kubectl config set-context --current --namespace=fineco-dev'
-alias kgetpods='kubectl get pods --namespace=fineco-dev'
+alias ktestext='kubectl login -u giancarlorosso -s devkubeext && kubectl config set-context --current --namespace=fineco-test'
+alias kgetpods='kubectl get pods'
+
+function opensslfull() {
+    openssl crl2pkcs7 -nocrl -certfile $1 | openssl pkcs7 -print_certs -text -noout
+}
 
 function kubelogs() {
     kubectl logs --tail 10 -f $1
@@ -37,7 +43,7 @@ function git_clone() {
     if [ $# -lt 2 ]; then
 	echo "No arguments supplied"
     else
-	git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/$1" $2 && scp -p -P 29418 giancarlorosso@cvs.fineco.it:hooks/commit-msg "$2/.git/hooks/"
+        git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/$1" $2 && (cd "$1" && mkdir -p `git rev-parse --git-dir`/hooks/ && curl -Lo `git rev-parse --git-dir`/hooks/commit-msg https://cvs.fineco.it/gerrit/tools/hooks/commit-msg && chmod +x `git rev-parse --git-dir`/hooks/commit-msg)
     fi
 }
 
@@ -170,7 +176,9 @@ function set-jdk() {
     if [ $# -eq 0 ]; then
 	echo "No arguments supplied"
     else
-	echo "$1"
+	export JAVA_HOME=/etc/alternatives/java_sdk_$1
+        export PATH=$JAVA_HOME/bin:$PATH
+	java -version
     fi
 }
 
