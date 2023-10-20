@@ -29,6 +29,7 @@ alias kmasterext='kubectl login -u giancarlorosso -s prodkubeext && kubectl conf
 alias kprodint='kubectl login -u giancarlorosso -s prodkubeint && kubectl config set-context --current --namespace=fineco-prod'
 alias kprodext='kubectl login -u giancarlorosso -s prodkubeext && kubectl config set-context --current --namespace=fineco-prod'
 alias kgetpods='kubectl get pods'
+alias ec='emacsclient -q'
 
 function opensslfull() {
     openssl crl2pkcs7 -nocrl -certfile $1 | openssl pkcs7 -print_certs -text -noout
