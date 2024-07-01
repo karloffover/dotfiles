@@ -47,3 +47,5 @@
 [lfs]
 	locksverify = false
 	url = https://cvs.fineco.it/nexus/repository/git-lfs/info/lfs
+[push]
+	autoSetupRemote = true

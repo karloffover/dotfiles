@@ -4,8 +4,8 @@ TODAY=$(date +%Y%m%d)
 alias devel='cd /home/giancarlorosso/Development'
 alias home="cd /mnt/c/Users/giancarlorosso"
 alias svn_propset='svn propset svn:ignore -F /c/users/giancarlorosso/Documents/svn_ignore.txt -R .'
-alias display_updates='mvn org.codehaus.mojo:versions-maven-plugin:2.8.1:display-dependency-updates'
-alias display_updates_no_major='mvn -DallowAnyUpdates=false -DallowMajorUpdates=false org.codehaus.mojo:versions-maven-plugin:2.8.1:display-dependency-updates'
+alias display_updates='mvn org.codehaus.mojo:versions-maven-plugin:2.16.1:display-dependency-updates'
+alias display_updates_no_major='mvn -DallowMajorUpdates=false org.codehaus.mojo:versions-maven-plugin:2.8.1:display-dependency-updates'
 alias oc-prod='oc login https://prod-openshift.fineco.it --username=giancarlorosso'
 alias oc-dev='oc login https://dev-openshift.fineco.it --username=giancarlorosso'
 alias oc-fineco-dev='oc project fineco-dev'
@@ -29,7 +29,7 @@ alias kmasterext='kubectl login -u giancarlorosso -s prodkubeext && kubectl conf
 alias kprodint='kubectl login -u giancarlorosso -s prodkubeint && kubectl config set-context --current --namespace=fineco-prod'
 alias kprodext='kubectl login -u giancarlorosso -s prodkubeext && kubectl config set-context --current --namespace=fineco-prod'
 alias kgetpods='kubectl get pods'
-alias ec='emacsclient -q'
+alias ec='emacsclient -q --alternate-editor='
 
 function opensslfull() {
     openssl crl2pkcs7 -nocrl -certfile $1 | openssl pkcs7 -print_certs -text -noout
