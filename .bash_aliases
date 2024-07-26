@@ -48,7 +48,7 @@ function git_clone() {
     if [ $# -lt 2 ]; then
 	echo "No arguments supplied"
     else
-        git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/$1" $2 && (cd "$1" && mkdir -p `git rev-parse --git-dir`/hooks/ && curl -Lo `git rev-parse --git-dir`/hooks/commit-msg https://cvs.fineco.it/gerrit/tools/hooks/commit-msg && chmod +x `git rev-parse --git-dir`/hooks/commit-msg)
+        git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/$1" $2 && (cd "$1" && mkdir -p `git rev-parse --git-dir`/hooks/ && curl -Lo `git rev-parse --git-dir`/hooks/commit-msg https://cvs.fineco.it/gerrit/tools/hooks/commit-msg && chmod +x `git rev-parse --git-dir`/hooks/commit-msg) && cd $1
     fi
 }
 
@@ -200,5 +200,16 @@ function kube-logs() {
 	echo "No arguments supplied"
     else
 	kubectl logs --tail 10 -f $1
+    fi
+}
+
+function aplay() {
+    if [ $# -lt 2 ]; then
+        echo "No arguments supplied"
+    else
+        local _limit=$1
+        local _playbook=$2
+        local _params="${@:3}"
+        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_tcc.yml -l ${_limit} ${_params} ${_playbook}
     fi
 }
