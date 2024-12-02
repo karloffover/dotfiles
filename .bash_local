@@ -1,5 +1,5 @@
 proxysrv
-export PATH=$HOME/.local/bin:$PATH:~/Applications/apache-maven-3.9.5/bin
+export PATH=$HOME/.local/bin:$PATH
 export XMLLINT_INDENT=" "
 export DISPLAY=localhost:-1.0
 export EDITOR='emacsclient -q --alternate-editor='

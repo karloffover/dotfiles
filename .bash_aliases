@@ -30,6 +30,7 @@ alias kprodint='kubectl login -u giancarlorosso -s prodkubeint && kubectl config
 alias kprodext='kubectl login -u giancarlorosso -s prodkubeext && kubectl config set-context --current --namespace=fineco-prod'
 alias kgetpods='kubectl get pods'
 alias ec='emacsclient -q --alternate-editor='
+alias emacs_graceful_stop="emacsclient -e '(save-buffers-kill-emacs)'"
 
 function opensslfull() {
     openssl crl2pkcs7 -nocrl -certfile $1 | openssl pkcs7 -print_certs -text -noout
@@ -210,6 +211,6 @@ function aplay() {
         local _limit=$1
         local _playbook=$2
         local _params="${@:3}"
-        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_tcc.yml -i hosts_promocc.yml -l ${_limit} ${_params} ${_playbook}
+        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_tcc.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -l ${_limit} ${_params} ${_playbook}
     fi
 }
