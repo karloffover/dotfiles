@@ -18,7 +18,7 @@ alias sshlog='ssh -l giancarlorosso@kdsa-view@netltr ckpsmp'
 alias sizes='du -d1 -k . | sort -n'
 alias ddeploy='cd ~/Development/deploy'
 alias ddocker='cd ~/Development/architetture/docker'
-alias dconfigs='cd ~/Development/deploy/configs'
+alias dconfigs='cd ~/Development/configs'
 alias dansible='cd ~/Development/deploy/ansible'
 alias kdevint='kubectl login -u giancarlorosso -s devkubeint && kubectl config set-context --current --namespace=fineco-dev'
 alias kdevext='kubectl login -u giancarlorosso -s devkubeext && kubectl config set-context --current --namespace=fineco-dev'
@@ -31,6 +31,7 @@ alias kprodext='kubectl login -u giancarlorosso -s prodkubeext && kubectl config
 alias kgetpods='kubectl get pods'
 alias ec='emacsclient -q --alternate-editor='
 alias emacs_graceful_stop="emacsclient -e '(save-buffers-kill-emacs)'"
+alias git-file-extensions="git ls-tree -r HEAD --name-only | perl -ne 'print \$1 if m/\.([^.\/]+)$/' | sort -u"
 
 function opensslfull() {
     openssl crl2pkcs7 -nocrl -certfile $1 | openssl pkcs7 -print_certs -text -noout
@@ -211,6 +212,6 @@ function aplay() {
         local _limit=$1
         local _playbook=$2
         local _params="${@:3}"
-        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_tcc.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -l ${_limit} ${_params} ${_playbook}
+        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_tcc.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -l ${_limit} ${_params} ${_playbook}
     fi
 }
