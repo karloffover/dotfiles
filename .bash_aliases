@@ -212,6 +212,6 @@ function aplay() {
         local _limit=$1
         local _playbook=$2
         local _params="${@:3}"
-        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_tcc.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -l ${_limit} ${_params} ${_playbook}
+        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_tcc.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -i hosts_openbo.yml -l ${_limit} ${_params} ${_playbook}
     fi
 }
