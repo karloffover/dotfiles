@@ -82,28 +82,28 @@ function proxysrv {
     echo 'Proxysrv Standard'
     export http_proxy=http://proxysrv.fineco.it:3128
     export https_proxy=$http_proxy
-    export no_proxy=".fineco.it,.finecobank.com"
+    export no_proxy="127.0.0.1,localhost,.fineco.it,.finecobank.com"
 }
 
 function proxy {
     echo 'Proxy Standard'
     export http_proxy=http://proxy.fineco.it:3128
     export https_proxy=$http_proxy
-    export no_proxy=".fineco.it,.finecobank.com"
+    export no_proxy="127.0.0.1,localhost,.fineco.it,.finecobank.com"
 }
 
 function proxy_v1 {
     echo "Proxy-v1"
     export http_proxy=http://proxy-v1.fineco.it:3128
     export https_proxy=$http_proxy
-    export no_proxy=".fineco.it,.finecobank.com"
+    export no_proxy="127.0.0.1,localhost,.fineco.it,.finecobank.com"
 }
 
 function proxy_v2 {
     echo "Proxy-v2"
     export http_proxy=http://proxy-v2.fineco.it:3128
     export https_proxy=$http_proxy
-    export no_proxy=".fineco.it,.finecobank.com"
+    export no_proxy="127.0.0.1,localhost,.fineco.it,.finecobank.com"
 }
 
 function unset_proxy {
@@ -212,6 +212,6 @@ function aplay() {
         local _limit=$1
         local _playbook=$2
         local _params="${@:3}"
-        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_tcc.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -i hosts_openbo.yml -l ${_limit} ${_params} ${_playbook}
+        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejb.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -i hosts_openbo.yml -i hosts_jibxml.yml -l ${_limit} ${_params} ${_playbook}
     fi
 }
