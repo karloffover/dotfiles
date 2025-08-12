@@ -1,11 +1,11 @@
 # This is Git's per-user configuration file.
 [user]
-        name = Giancarlo Rosso
-        email = g.rosso@fineco.it
-        username = giancarlorosso
+	name = Giancarlo Rosso
+	email = g.rosso@fineco.it
+	username = giancarlorosso
 [alias]
 	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''	       %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
 	lg = !"git lg1"
 # Git Commit, Add all and Push — in one step.
 	cap = "!f() { git commit -m \"$@\"; }; f"
@@ -26,12 +26,13 @@
 # code review
 	review = "push origin HEAD:refs/for/master"
 # switch
-        sw = switch
+	sw = switch
 [credential]
 	helper = store --file ~/.git-credentials
 [core]
 	fscache = true
 	autocrlf = input
+	pager = cat
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -47,3 +48,5 @@
 	url = https://cvs.fineco.it/nexus/repository/git-lfs/info/lfs
 [push]
 	autoSetupRemote = true
+[diff "elisp"]
+	xfuncname = ^\\([^[:space:]]*def[^[:space:]]+[[:space:]]+([^()[:space:]]+)
