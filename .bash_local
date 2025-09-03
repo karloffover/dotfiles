@@ -1,8 +1,7 @@
 # -*- mode:conf -*-
 # file: .bash_local
 proxysrv
-export MAVEN_HOME="$HOME/Applications/apache-maven-3.9.9"
-export PATH=$HOME/.local/bin:$PATH:$MAVEN_HOME/bin
+export PATH=$HOME/.local/bin:$PATH
 export XMLLINT_INDENT="        "
 #export DISPLAY=localhost:-1.0
 export EDITOR='emacsclient -q --alternate-editor='
