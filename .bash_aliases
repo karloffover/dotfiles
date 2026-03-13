@@ -4,8 +4,8 @@ TODAY=$(date +%Y%m%d)
 alias devel='cd /home/giancarlorosso/Development'
 alias home="cd /mnt/c/Users/giancarlorosso"
 alias svn_propset='svn propset svn:ignore -F /c/users/giancarlorosso/Documents/svn_ignore.txt -R .'
-alias display_updates='mvn org.codehaus.mojo:versions-maven-plugin:2.16.1:display-dependency-updates'
-alias display_updates_no_major='mvn -DallowMajorUpdates=false org.codehaus.mojo:versions-maven-plugin:2.8.1:display-dependency-updates'
+alias display_updates='mvn org.codehaus.mojo:versions-maven-plugin:2.20.1:display-dependency-updates'
+alias display_updates_no_major='mvn -DallowMajorUpdates=false org.codehaus.mojo:versions-maven-plugin:2.20.1:display-dependency-updates'
 alias oc-prod='oc login https://prod-openshift.fineco.it --username=giancarlorosso'
 alias oc-dev='oc login https://dev-openshift.fineco.it --username=giancarlorosso'
 alias oc-fineco-dev='oc project fineco-dev'
@@ -50,7 +50,9 @@ function git_clone() {
     if [ $# -lt 2 ]; then
 	echo "No arguments supplied"
     else
-        git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/$1" $2 && (cd "$1" && mkdir -p `git rev-parse --git-dir`/hooks/ && curl -Lo `git rev-parse --git-dir`/hooks/commit-msg https://cvs.fineco.it/gerrit/tools/hooks/commit-msg && chmod +x `git rev-parse --git-dir`/hooks/commit-msg) && cd $1
+        _repo=$1
+        _dest=$2
+        git clone "https://giancarlorosso@cvs.fineco.it/gerrit/a/${_repo}" ${_dest} && (cd "${_dest}" && mkdir -p `git rev-parse --git-dir`/hooks/ && curl -Lo `git rev-parse --git-dir`/hooks/commit-msg https://cvs.fineco.it/gerrit/tools/hooks/commit-msg && chmod +x `git rev-parse --git-dir`/hooks/commit-msg) && cd ${_dest}
     fi
 }
 
@@ -212,7 +214,7 @@ function aplay() {
         local _limit=$1
         local _playbook=$2
         local _params="${@:3}"
-        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejbbank.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -i hosts_openbo.yml -i hosts_jibxml.yml -i hosts_extranet.yml -i hosts_promofe.yml -i hosts_genericxml.yml -l ${_limit} ${_params} ${_playbook}
+        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ansible-playbook -u root -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejbbank.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -i hosts_openbo.yml -i hosts_jibxml.yml -i hosts_extranet.yml -i hosts_promofe.yml -i hosts_genericxml.yml -i inventory -i hosts_smspin.yml -l ${_limit} ${_params} ${_playbook}
     fi
 }
 
@@ -221,6 +223,6 @@ function show_all_groups() {
         echo "Missing group name"
     else
         local _group=$1
-        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ../showgroups.sh -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejbbank.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -i hosts_openbo.yml -i hosts_jibxml.yml -i hosts_extranet.yml -i hosts_promofe.yml -i hosts_genericxml.yml -l ${_group}
+        ANSIBLE_CONFIG=~/.ansible/ansible.cfg ../showgroups.sh -i hosts_production -i hosts_dev.yml -i hosts_test.yml -i hosts_ejbbank.yml -i hosts_cc.yml -i hosts_promocc.yml -i hosts_obj.yml -i hosts_support.yml -i hosts_promocc.yml -i hosts_wsejb.yml -i hosts_mycardsxml.yml -i hosts_pd.yml -i hosts_banking.yml -i hosts_ejbtrad.yml -i hosts_wsextranet.yml -i hosts_openbo.yml -i hosts_jibxml.yml -i hosts_extranet.yml -i hosts_promofe.yml -i hosts_genericxml.yml -i inventory -i hosts_smspin.yml -l ${_group}
     fi
 }
